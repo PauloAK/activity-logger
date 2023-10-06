@@ -9,12 +9,12 @@ use Exception;
 use GuzzleHttp\Client;
 
 class Logger {
-    const API_SERVER = "http://127.0.0.1";
 
     public function __construct(
         private string $apiToken,
         private string $deviceId,
-        private int $secondsInterval = 60
+        private int $secondsInterval = 60,
+        private string $apiServer = "http://127.0.0.1"
     ) {
         if ($this->secondsInterval <= 0) {
             throw new Exception("Your interval needs to be greater than zero.");
@@ -27,7 +27,7 @@ class Logger {
             'http_errors' => false
         ]);
 
-        $response = $client->post(self::API_SERVER . "/api/v1/activities", [
+        $response = $client->post($this->apiServer . "/api/v1/activities", [
             'body' => json_encode([
                 'device_id' => $this->deviceId,
             ]),
@@ -65,7 +65,8 @@ try {
     $logger = new Logger(
         $_ENV['API_TOKEN'],
         $_ENV['DEVICE_ID'],
-        $_ENV['LOG_INTERVAL']
+        $_ENV['LOG_INTERVAL'],
+        $_ENV['API_SERVER'],
     );
 
     $logger->run();
