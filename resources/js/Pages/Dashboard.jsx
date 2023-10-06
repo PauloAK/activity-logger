@@ -16,8 +16,9 @@ export default function Dashboard({ auth, activities }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                         {
                             !activities?.data?.length ?
-                                <div>
-                                    No activities registered yet! Please, configure your data logger using your api token, available in the profile page.
+                                <div className='text-center text-gray-900'>
+                                    No activities registered yet!<br/>
+                                    Please, configure your data logger using your api token, available in the <a className='text-blue-500' href={route('profile.edit')}>profile page</a>.
                                 </div>
                             : <>
                                 <ActivitiesTable activities={activities.data} />
@@ -38,13 +39,20 @@ function ActivitiesTable({ activities }) {
         <table className='table-auto text-center w-full'>
             <thead>
                 <tr>
-                    <th>Your last 10 activities</th>
+                    <th className='text-center' colSpan={2}>Your last 10 activities</th>
+                </tr>
+                <tr>
+                    <th className='text-center'>Device</th>
+                    <th className='text-center'>Moment</th>
                 </tr>
             </thead>
             <tbody>
                 {
                     activities?.map(activity =>
                         <tr key={activity.id}>
+                            <td className='text-center'>
+                                {activity.device_id}
+                            </td>
                             <td className='text-center'>
                                 {moment(activity.created_at).calendar()}
                             </td>

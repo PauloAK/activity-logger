@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ActivityRequest;
 use Exception;
-use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
-    public function store(Request $request)
+    public function store(ActivityRequest $request)
     {
         try {
-            // Just store the activity for the user,
-            // We just need the timestamps for now,
-            // No data aditional data is stored yet
-            $request->user()->activities()->create([]);
+            $request->user()->activities()->create([
+                'device_id' => $request->input('device_id')
+            ]);
 
             return response()->json([
                 'message' => 'Created successfully!'
