@@ -1,3 +1,4 @@
+import PaginationButton from '@/Components/PaginationButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import moment from 'moment';
@@ -21,9 +22,9 @@ export default function Dashboard({ auth, activities }) {
                                     Please, configure your data logger using your api token, available in the <a className='text-blue-500' href={route('profile.edit')}>profile page</a>.
                                 </div>
                             : <>
-                                <ActivitiesTable activities={activities.data} />
-                                <div className='text-sm opacity-80 text-center mt-3'>
-                                    To add new devices, configrue a new logger using your api token, available in the profile page.
+                                <ActivitiesTable activities={activities} />
+                                <div className='text-sm opacity-70 text-center mt-3'>
+                                    To add new devices, configure a new logger using your api token, available in the profile page.
                                 </div>
                             </>
                         }
@@ -39,7 +40,7 @@ function ActivitiesTable({ activities }) {
         <table className='table-auto text-center w-full'>
             <thead>
                 <tr>
-                    <th className='text-center' colSpan={2}>Your last 10 activities</th>
+                    <th className='text-center' colSpan={2}>Your recorded activities</th>
                 </tr>
                 <tr>
                     <th className='text-center'>Device</th>
@@ -48,7 +49,7 @@ function ActivitiesTable({ activities }) {
             </thead>
             <tbody>
                 {
-                    activities?.map(activity =>
+                    activities?.data?.map(activity =>
                         <tr key={activity.id}>
                             <td className='text-center'>
                                 {activity.device_id}
@@ -60,6 +61,20 @@ function ActivitiesTable({ activities }) {
                     )
                 }
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colSpan={2} className='text-center'>
+                        <div className='text-sm my-2 opacity-70'>
+                            Showing from entry {activities.from} to {activities.to}, of {activities.total} total entries
+                        </div>
+                        <div className='flex gap-2 justify-center'>
+                            {
+                                activities?.links?.map(link => <PaginationButton isActive={link.active} isDisabled={!link.active && !link.url} className='text-xs p-1' href={link.url}>{link.label}</PaginationButton>)
+                            }
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     );
 }
