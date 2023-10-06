@@ -1,5 +1,8 @@
 # Standalone Logger Client
 
+## Overview
+This is a simple client to send activity logs to the application server, copy this folder into the place that you want to use the logger, then follow the steps below to install.
+
 ## Installation
 1. Install composer dependencies
 ```

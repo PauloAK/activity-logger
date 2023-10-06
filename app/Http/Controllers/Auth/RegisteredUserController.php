@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
 
         do {
             $token = Str::random(60);
-        } while ( User::where('token', $token)->exists() );
+        } while ( User::where('api_token', $token)->exists() );
 
         $user = User::create([
             'name' => $request->name,
