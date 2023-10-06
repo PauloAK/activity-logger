@@ -16,11 +16,11 @@ class ActivityController extends Controller
             // No data aditional data is stored yet
             $request->user()->activities()->create([]);
 
-            return $this->json([
+            return response()->json([
                 'message' => 'Created successfully!'
             ], 201);
         } catch (Exception $e) {
-            return $this->json([
+            return response()->json([
                 'message' => 'An internal error occured while trying to create your activity!'
             ], 500);
         }

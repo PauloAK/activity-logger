@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -37,9 +38,16 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $token = null;
+
+        do {
+            $token = Str::random(60);
+        } while ( User::where('token', $token)->exists() );
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'api_token' => $token,
             'password' => Hash::make($request->password),
         ]);
 
