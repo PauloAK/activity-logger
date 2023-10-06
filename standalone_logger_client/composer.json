@@ -1,0 +1,23 @@
+{
+    "name": "pauloak/standalone_logger_client",
+    "require": {
+        "guzzlehttp/guzzle": "^7.8",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "PauloAK\\StandaloneLoggerClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Paulo Kramer",
+            "email": "paulo_kramer@hotmail.com"
+        }
+    ],
+    "scripts": {
+        "start": [
+            "@php ./src/logger.php"
+        ]
+    }
+}
