@@ -27,6 +27,10 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 <p className="mt-1 text-sm text-gray-600">
                     Update your account's profile information and email address.
                 </p>
+
+                <p className="mt-2 text-sm text-gray-600">
+                    <b>Your API Token:</b> {user.api_token}
+                </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
